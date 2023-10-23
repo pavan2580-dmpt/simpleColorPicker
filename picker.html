@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="picker.css">
+</head>
+<body>
+    <h1>Color Picker</h1>
+    <div class="maincontent">
+        <div class="left_side">
+            <img src="./assets/image.jpg" id="previewImage" width="600px" alt="hello">
+        </div>
+
+        <div class="right_side">
+            <div class="file-upload">
+               <label for="file">
+                <button class="button">
+                    <div class="container">
+                      <div class="folder folder_one"></div>
+                      <div class="folder folder_two"></div>
+                      <div class="folder folder_three"></div>
+                      <div class="folder folder_four"></div>
+                    </div>
+                    <div class="active_line"></div>
+                    <span class="text">File Explorer</span>
+                  </button>
+               </label>
+               <input type="file"  accept="image/*" id="imageInput" onchange="displayImage()">
+
+            </div>
+            <button id="btn" class="btn1">
+                <span> Pick Color
+                </span>
+              </button>
+
+             <div>
+                <h2>Color =  <input type="color" id="result"></input></h2>
+             </div>
+              <h2  >Color = <span id="res1"></span> </h2>
+        </div>
+    </div>
+   
+    
+        
+       
+    
+
+
+    <script>
+        const button = document.getElementById('btn')
+        const result  = document.getElementById('result')
+        const res1 = document.getElementById('res1')
+        const colorPicker = async()=>{
+            const eyeDrop = new EyeDropper()
+            const {sRGBHex} = await eyeDrop.open()
+            console.log(sRGBHex)
+            result.value = sRGBHex ;
+            res1.style.color = `${sRGBHex}`
+            res1.innerHTML = `${sRGBHex}`
+        }
+        button.addEventListener('click',colorPicker)
+
+        function displayImage() {
+      const imageInput = document.getElementById('imageInput');
+      const previewImage = document.getElementById('previewImage');
+      
+      if (imageInput.files && imageInput.files[0]) {
+        const reader = new FileReader();
+        
+        reader.onload = function (e) {
+          previewImage.src = e.target.result;
+          previewImage.style.display = 'block';
+        };
+        
+        reader.readAsDataURL(imageInput.files[0]);
+      }
+    }
+    </script>
+</body>
+</html>
